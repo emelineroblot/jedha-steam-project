@@ -7,14 +7,17 @@ Projet réalisé dans le cadre de la certification **Jedha — Data Science & Da
 
 ---
 
-## 📎 Notebook publié
+## 📎 Sorties d'exécution Databricks
 
-> 🔗 **Lien Databricks** : _à compléter après publication_
->
-> `https://…databricks.com/…`
+La fonction *Publish* de Databricks ne génère plus d'URL publique partageable. Les sorties
+d'exécution sont donc fournies sous forme de **captures d'écran** :
 
-*(Le lien est généré depuis Databricks via le bouton **Publish**. Si la publication est refusée
-pour cause de taille, découper le notebook aux frontières de parties indiquées ci-dessous.)*
+> 📁 **[`screens_databricks/`](screens_databricks/)** — 61 images numérotées dans l'ordre de
+> lecture du notebook (`00001.jpg` → `00061.jpg`), couvrant l'intégralité des cellules, des
+> tableaux de résultats et des visualisations.
+
+Le notebook `Steam_project_1.ipynb` contient lui aussi toutes ses sorties : il se lit
+directement dans GitHub, dans Jupyter, ou après réimport dans Databricks.
 
 ---
 
@@ -54,8 +57,10 @@ pour cause de taille, découper le notebook aux frontières de parties indiquée
 | **6. Facteurs de succès** | Matrice de corrélation · localisation · portage · prix · fonctionnalités · qualité → **la réponse à la question centrale** |
 | **7. Synthèse** | Synthèse chiffrée générée depuis les dataframes · lecture analytique · recommandations métier (clairement séparées des constats data) |
 
-Les frontières de découpage, si la publication Databricks refuse le fichier :
-**parties 1-2** · **partie 3** · **parties 4-7**.
+Le notebook forme un tout cohérent et s'exécute d'une traite. S'il devait être découpé, les
+frontières naturelles sont : **parties 1-2** (préparation) · **partie 3** (macro) ·
+**parties 4-7** (genres, plateformes, facteurs de succès, synthèse) — les parties 4 à 7
+dépendant de la préparation, celle-ci devrait être recopiée en tête de chaque fichier.
 
 ---
 
@@ -86,7 +91,7 @@ Les frontières de découpage, si la publication Databricks refuse le fichier :
    S3 est public.
 4. Configurer les visualisations : chaque `display()` est précédé d'un commentaire indiquant
    le type de graphique conseillé.
-5. Publier via le bouton **Publish**, puis reporter l'URL en haut de ce README.
+5. Les captures du dossier `screens_databricks/` correspondent à cette exécution : elles servent de référence si le notebook est relu sans cluster.
 
 ---
 
