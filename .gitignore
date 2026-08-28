@@ -1,0 +1,22 @@
+# Documentation de travail interne (non livrée au jury)
+docs/
+
+# Claude Code
+.claude/
+CLAUDE.md
+AGENTS.md
+contexte/
+.agent-team/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
