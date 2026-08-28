@@ -24,7 +24,7 @@ pour cause de taille, découper le notebook aux frontières de parties indiquée
 |---|---|
 | **Source** | `s3://full-stack-bigdata-datasets/Big_Data/Project_Steam/steam_game_output.json` |
 | **Origine** | Extraction de l'API **SteamSpy** |
-| **Volume** | ~55 700 entrées, structure JSON imbriquée (`data` → 23 champs, dont une struct `tags` de plusieurs centaines de colonnes) |
+| **Volume** | 55 691 entrées, structure JSON imbriquée (`data` → 22 champs, dont une struct `tags` de plusieurs centaines de colonnes) |
 | **Nature** | Semi-structuré : struct imbriquée, tableaux (`categories`), champs texte multi-valués (`genre`, `languages`) |
 
 ### Pièges du dataset — et comment ils sont traités
@@ -33,7 +33,7 @@ pour cause de taille, découper le notebook aux frontières de parties indiquée
 |---|---|
 | `price` et `initialprice` sont en **centimes de dollar US**, stockés en **texte** | Cast + division par 100 → `price_usd` (partie 2.3). Sans ce cast, `min()`/`max()` comparent lexicographiquement et renvoient des résultats faux. |
 | Les valeurs manquantes sont des **chaînes vides**, pas des `NULL` | Normalisation `"" → NULL` sur toutes les colonnes texte (partie 2.2), avant tout comptage. |
-| Le catalogue contient des **logiciels et des DLC**, pas seulement des jeux | Séparation `df_clean` (catalogue complet) / `df_games` (`type == "game"`) — partie 2.6. |
+| Le catalogue contient des **logiciels** vendus sur Steam, pas seulement des jeux | Le champ `type` est **inopérant** ici : il vaut `game` pour 55 690 entrées sur 55 691, logiciels compris. Le tri se fait donc sur le **genre déclaré** (liste `GENRES_LOGICIELS`, partie 2.6), qui isole les catégories Steam non ludiques. |
 | Un jeu déclare **plusieurs genres** | `explode` assumé et documenté ; `countDistinct("appid")` partout où il faut compter des jeux. |
 | `release_date` mélange **plusieurs formats** | Année par regex (robuste) + date complète par `coalesce` sur 4 formats (partie 2.3). |
 | `owners` est une **fourchette** (`"1,000,000 .. 2,000,000"`) | Parsing des bornes et milieu de fourchette `owners_mid`, utilisé comme proxy de ventes avec réserves explicites. |
@@ -70,6 +70,9 @@ Les frontières de découpage, si la publication Databricks refuse le fichier :
   que 100 % des genres sont sur Windows n'apprend rien.
 - **`owners` plutôt que le nombre d'avis** comme proxy de ventes, avec les réserves énoncées
   (fourchette large, prix courant ≠ prix de vente historique, commission Steam non déduite).
+- **Moyenne affichée à côté de la médiane** en partie 6 : `owners` est une variable **en paliers**
+  (10 000 / 35 000 / 75 000 / 350 000…), donc les médianes retombent sur le même palier et
+  paraissent plates même quand la distribution se déplace nettement.
 - **Synthèse générée par le code** : les chiffres de la partie 7 sont extraits des dataframes,
   ils ne peuvent donc pas diverger des tableaux du notebook.
 
